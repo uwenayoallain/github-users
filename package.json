@@ -1,0 +1,28 @@
+{
+  "name": "github-users",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "ncc build src/index.ts -o dist",
+    "tsc:w": "tsc -w --outDir ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uwenayoallain/github-users.git"
+  },
+  "author": "UWENAYO Alain Pacifique",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uwenayoallain/github-users/issues"
+  },
+  "homepage": "https://github.com/uwenayoallain/github-users#readme",
+  "devDependencies": {
+    "typescript": "^4.7.3"
+  },
+  "dependencies": {
+    "@vercel/ncc": "^0.34.0"
+  }
+}
