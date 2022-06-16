@@ -5291,7 +5291,7 @@ async function getUsers() {
     return users;
 }
 function checkifFlowsMe(users) {
-    let buddies = [];
+    let buddies;
     users.forEach(async (user) => {
         if (await octokit.request("GET /users/{username}/following/{target_user}", {
             username: user.login,

@@ -15,7 +15,7 @@ async function getUsers() {
 }
 
 function checkifFlowsMe(users: ListUserFollowersResponse["data"]): ListUserFollowersResponse["data"] {
-  let buddies: ListUserFollowersResponse["data"] = [];
+  let buddies: ListUserFollowersResponse["data"];
   users.forEach(async (user) => {
     if (
       await octokit.request("GET /users/{username}/following/{target_user}", {
