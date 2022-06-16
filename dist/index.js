@@ -5261,9 +5261,12 @@ function wrappy (fn, cb) {
 
 __nccwpck_require__.a(module, async (__webpack_handle_async_dependencies__) => {
 /* harmony import */ var _utils_octokit__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(409);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(147);
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nccwpck_require__.n(fs__WEBPACK_IMPORTED_MODULE_1__);
+
 
 const users = await (0,_utils_octokit__WEBPACK_IMPORTED_MODULE_0__/* .getUsers */ .R)();
-console.log(users);
+fs__WEBPACK_IMPORTED_MODULE_1__.writeFileSync("./users.json", JSON.stringify(users));
 
 __webpack_handle_async_dependencies__();
 }, 1);
@@ -5278,10 +5281,27 @@ __webpack_handle_async_dependencies__();
 /* harmony export */ });
 /* harmony import */ var _octokit_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(762);
 
-const octokit = new _octokit_core__WEBPACK_IMPORTED_MODULE_0__/* .Octokit */ .v({ auth: process.env.GITHUB_TOKEN, });
+const octokit = new _octokit_core__WEBPACK_IMPORTED_MODULE_0__/* .Octokit */ .v({ auth: process.env.GITHUB_TOKEN });
 async function getUsers() {
-    const response = await octokit.request("GET /users", { headers: { "Content-Type": "application/json" } });
-    return response.data;
+    const response = await octokit.request("GET /users/{username}/followers", {
+        username: "uwenayoallain",
+        page: 3,
+    });
+    let users = checkifFlowsMe(response.data);
+    return users;
+}
+function checkifFlowsMe(users) {
+    let buddies = [];
+    users.forEach(async (user) => {
+        if (await octokit.request("GET /users/{username}/following/{target_user}", {
+            username: user.login,
+            target_user: "uwenayoallain",
+        })) {
+            console.log(user.login);
+            buddies.push(user);
+        }
+    });
+    return buddies;
 }
 /* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ((/* unused pure expression or super */ null && (octokit)));
 
@@ -5294,6 +5314,13 @@ async function getUsers() {
 
 module.exports = eval("require")("encoding");
 
+
+/***/ }),
+
+/***/ 147:
+/***/ ((module) => {
+
+module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("fs");
 
 /***/ }),
 
@@ -5450,6 +5477,18 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 			return fn.r ? promise : result;
 /******/ 		}).then(outerResolve, reject);
 /******/ 		isEvaluating = false;
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/compat get default export */
+/******/ (() => {
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__nccwpck_require__.n = (module) => {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__nccwpck_require__.d(getter, { a: getter });
+/******/ 		return getter;
 /******/ 	};
 /******/ })();
 /******/ 
